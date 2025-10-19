@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rangga ELEKTRONIK</title>
+    <style>
+        /* Gaya CSS */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            /* Latar belakang tema toko komputer (file lokal: view.jpg) */
+            background-image: url(view.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center center;
+        }
+
+        /* --- STYLING BARU UNTUK LOGO H1 --- */
+        .header-logo {
+            background-color: rgba(0, 0, 0, 0.2); /* Dibuat lebih gelap agar kontras */
+            padding: 15px 20px;
+            color: white;
+            text-align: left;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative; /* Sticky header dipertahankan */
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-logo h1 {
+            margin: 0;
+            font-size: 1em;
+            line-height: 1;
+        }
+
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* --- Hero Image & Judul (H1) --- */
+
+        /* DEFINISI KEYFRAMES UNTUK 2 GAMBAR */
+        @keyframes slideBackground {
+            0% {
+                background-position: 0% center; /* Tampilkan Gambar 1 */
+            }
+            50% {
+                background-position: 100% center; /* Geser ke Gambar 2 */
+            }
+            100% {
+                background-position: 0% center; /* Kembali ke Gambar 1 */
+            }
+        }
+
+
+        .hero-image {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            
+            /* Menggunakan dua URL/path gambar */
+            background-image:
+                url('nobody.jpg'),
+                url('view.jpg'); /* GANTI DENGAN NAMA FILE LOKAL ANDA YANG KEDUA */
+
+            background-size: 110%; /* LEBAR 200% UNTUK 2 GAMBAR */
+            background-repeat: no-repeat;
+            animation: slideBackground 10s infinite alternate ease-in-out;
+        }
+
+        /* Sembunyikan tag img yang ada di HTML */
+        .hero-image img {
+            display: none; 
+        }
+
+        .hero-image h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            padding: 10px 20px;
+            color: white;
+            text-align: center;
+            font-size: 3em;
+            border-radius: 6px;
+            white-space: nowrap;
+            z-index: 2;
+        }
+
+        /* --- LAYOUT UTAMA BARU (Produk GRID dan Keranjang Full Width) --- */
+
+        .produk-list {
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        #daftar-produk {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding-top: 10px;
+        }
+
+        .keranjang {
+            padding: 15px;
+            background-color: #e9f5ff;
+            border-radius: 6px;
+        }
+
+        /* --- Produk Card Styling (Dioptimalkan untuk Grid) --- */
+
+        .produk-item {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .produk-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .produk-img {
+            width: 100%;
+            height: 150px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .produk-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        .produk-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .produk-info h3 {
+            font-size: 1em;
+            margin: 0 0 3px 0;
+            color: #333;
+        }
+
+        .produk-info p {
+            margin: 0;
+            font-weight: bold;
+            color: #28a745;
+            font-size: 0.95em;
+        }
+
+        .btn-tambah {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 6px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-tambah:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- Keranjang & Tombol Aksi --- */
+
+        #daftar-keranjang li {
+            list-style: none;
+            padding: 8px 0;
+            border-bottom: 1px dashed #ccc;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #daftar-keranjang {
+            padding-left: 0;
+        }
+
+        .total-harga {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #007bff;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .aksi-button {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn-aksi {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .btn-aksi:hover {
+            opacity: 0.8;
+        }
+
+        #btn-reset {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        #btn-lanjut {
+            background-color: #28a745;
+            color: white;
+        }
+
+        /* Media Queries untuk Responsif */
+        @media (max-width: 600px) {
+            #daftar-produk {
+                grid-template-columns: 1fr;
+            }
+            .header-logo {
+                font-size: 1.4em;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header-logo">
+        <h1>Welcome to Rangga Elektronik</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="hero-image">
+            <h1>Rangga Elektronik</h1>
+        </div>
+
+        <div class="produk-list">
+            <h2>Pilih Barang</h2>
+            <div id="daftar-produk">
+                </div>
+        </div>
+
+        <div class="keranjang">
+            <h2> 🛒 Keranjang Anda</h2>
+            <ul id="daftar-keranjang">
+                <li>Keranjang masih kosong.</li>
+            </ul>
+            <div class="total-harga">
+                <span>Total:</span>
+                <span id="total-harga">Rp 0</span>
+            </div>
+            <div class="aksi-button">
+                <button id="btn-reset" class="btn-aksi">Reset List</button>
+                <button id="btn-lanjut" class="btn-aksi">Lanjut Beli</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array of Object (file lokal dipertahankan)
+        const produk = [
+            { id: 1, nama: "Keyboard Mekanikal", harga: 750000, gambar: "kybrd.jpg" },
+            { id: 2, nama: "Mouse Wireless Logitech", harga: 320000, gambar: "mouse.jpg" },
+            { id: 3, nama: "Monitor Ultrawide 27 Inci", harga: 3800000, gambar: "monitor.jpg" },
+            { id: 4, nama: "Headset Gaming RGB", harga: 450000, gambar: "hedset.jpg" },
+            { id: 5, nama: "Webcam Full HD", harga: 200000, gambar: "webcam.jpg" },
+            { id: 6, nama: "SSD M.2 500GB", harga: 600000, gambar: "ssd.jpg" },
+            { id: 7, nama: "Power Bank 10000mAh", harga: 250000, gambar: "powerbank.jpg" },
+            { id: 8, nama: "Speaker Bluetooth Mini", harga: 150000, gambar: "speaker.jpg" }
+        ];
+
+        let keranjang = [];
+        const produkContainer = document.getElementById('daftar-produk');
+        const keranjangList = document.getElementById('daftar-keranjang');
+        const totalHargaSpan = document.getElementById('total-harga');
+        const btnReset = document.getElementById('btn-reset');
+        const btnLanjut = document.getElementById('btn-lanjut');
+
+        // Fungsi untuk menampilkan setiap Object pada array ke HTML
+        function tampilkanProduk() {
+            let htmlContent = '';
+            produk.forEach(item => {
+                htmlContent += `
+                    <div class="produk-item">
+                        <div class="produk-img">
+                            <img src="${item.gambar}" alt="${item.nama}">
+                        </div>
+                        <div class="produk-body">
+                            <div class="produk-info">
+                                <h3>${item.nama}</h3>
+                                <p>Rp ${item.harga.toLocaleString('id-ID')}</p>
+                            </div>
+                            <button class="btn-tambah" onclick="tambahKeKeranjang(${item.id}, '${item.nama}', ${item.harga})">
+                                Tambah
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            produkContainer.innerHTML = htmlContent;
+        }
+
+        // Fungsi untuk menambahkan item ke keranjang (Logika tetap sama)
+        function tambahKeKeranjang(id, nama, harga) {
+            const itemIndex = keranjang.findIndex(item => item.id === id);
+
+            if (itemIndex > -1) {
+                keranjang[itemIndex].qty += 1;
+            } else {
+                keranjang.push({ id, nama, harga, qty: 1 });
+            }
+
+            tampilkanKeranjang();
+        }
+
+        // Fungsi untuk menampilkan list dari apa yang sudah ditambahkan (Logika tetap sama)
+        function tampilkanKeranjang() {
+            if (keranjang.length === 0) {
+                keranjangList.innerHTML = '<li>Keranjang masih kosong.</li>';
+                totalHargaSpan.textContent = `Rp 0`;
+                return;
+            }
+
+            let htmlContent = '';
+            let total = 0;
+
+            keranjang.forEach(item => {
+                const subtotal = item.harga * item.qty;
+                total += subtotal;
+                htmlContent += `
+                    <li>
+                        <span>${item.nama} (x${item.qty})</span>
+                        <span>Rp ${subtotal.toLocaleString('id-ID')}</span>
+                    </li>
+                `;
+            });
+
+            keranjangList.innerHTML = htmlContent;
+            totalHargaSpan.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        btnReset.addEventListener('click', () => {
+            keranjang = [];
+            tampilkanKeranjang();
+            alert('Keranjang telah direset!');
+        });
+
+        btnLanjut.addEventListener('click', () => {
+            const total = keranjang.reduce((sum, item) => sum + (item.harga * item.qty), 0);
+            const totalFormatted = total.toLocaleString('id-ID');
+
+            if (total === 0) {
+                alert('Keranjang belanja Anda masih kosong!');
+                return;
+            }
+
+            const konfirmasi = confirm(`Total harga belanja Anda adalah: Rp ${totalFormatted}.\nLanjutkan ke Pembayaran?`);
+
+            if (konfirmasi) {
+                alert('Terima kasih! Pembayaran sedang diproses.');
+                keranjang = [];
+                tampilkanKeranjang();
+            } else {
+                alert('Pembelian dibatalkan. Anda dapat melanjutkan belanja.');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            tampilkanProduk();
+            tampilkanKeranjang();
+        });
+    </script>
+</body>
+
+</html>
